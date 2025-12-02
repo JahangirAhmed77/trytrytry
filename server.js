@@ -8,8 +8,6 @@ import userRouter from "./routes/userRoute.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
-connectDB();
-
 // middleware
 const corsOptions = {
   origin: "https://user-auth-swart.vercel.app/", // frontend Url
@@ -22,6 +20,12 @@ app.use(cors(corsOptions));
 
 app.use("/user", userRouter);
 
-app.listen(port, () => {
-  console.log(`Server in running on http://localhost:${port}`);
+// Connect to DB first, then start server
+connectDB().then(() => {
+  app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+  });
+}).catch((error) => {
+  console.error("Failed to connect to database. Server not started.");
+  process.exit(1);
 });
