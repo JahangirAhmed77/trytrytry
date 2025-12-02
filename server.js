@@ -6,13 +6,9 @@ import userRouter from "./routes/userRoute.js";
 
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 connectDB();
-
-app.listen(port, () => {
-  console.log(`Server in running on http://localhost:${port}`);
-});
 
 // middleware
 const corsOptions = {
@@ -25,3 +21,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.use("/user", userRouter);
+
+app.listen(port, () => {
+  console.log(`Server in running on http://localhost:${port}`);
+});

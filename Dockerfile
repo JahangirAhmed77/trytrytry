@@ -10,5 +10,8 @@ COPY . /app
 # Install the application dependencies
 RUN npm install
 
+# Expose the port
+EXPOSE 4000
+
 # Define the entry point for the container
 CMD ["node", "server.js"]
